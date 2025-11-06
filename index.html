@@ -15,7 +15,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Calculadora de Costos de Impresión</h1>
-        <p class="text-center">Agrega medidas en cm (ej: 1,00x2,00), calcula m² totales y costos.</p>
+        <p class="text-center">Agrega medidas en cm (ej: 1x2, 1.00x2.00 o 1,00x2,00), calcula m² totales y costos.</p>
 
         <!-- Formulario para agregar medidas -->
         <div class="card mb-4">
@@ -24,11 +24,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="ancho" class="form-label">Ancho (cm)</label>
-                        <input type="number" class="form-control" id="ancho" step="0.01" placeholder="Ej: 1.00">
+                        <input type="number" class="form-control" id="ancho" step="0.01" placeholder="Ej: 1, 1.00 o 1,00">
                     </div>
                     <div class="col-md-4">
                         <label for="alto" class="form-label">Alto (cm)</label>
-                        <input type="number" class="form-control" id="alto" step="0.01" placeholder="Ej: 2.00">
+                        <input type="number" class="form-control" id="alto" step="0.01" placeholder="Ej: 2, 2.00 o 2,00">
                     </div>
                     <div class="col-md-4 d-flex align-items-end">
                         <button class="btn btn-primary" onclick="agregarMedida()">Agregar Medida</button>
@@ -85,8 +85,9 @@
         let totalM2 = 0;
 
         function agregarMedida() {
-            const ancho = parseFloat(document.getElementById('ancho').value);
-            const alto = parseFloat(document.getElementById('alto').value);
+            // Reemplaza comas por puntos para aceptar formatos como 1,00 o 1.00
+            const ancho = parseFloat(document.getElementById('ancho').value.replace(',', '.'));
+            const alto = parseFloat(document.getElementById('alto').value.replace(',', '.'));
             if (isNaN(ancho) || isNaN(alto) || ancho <= 0 || alto <= 0) {
                 alert('Ingresa valores válidos para ancho y alto.');
                 return;
@@ -119,9 +120,9 @@
         }
 
         function calcularTotal() {
-            const precioM2 = parseFloat(document.getElementById('precioM2').value) || 0;
-            const costoDiseno = parseFloat(document.getElementById('costoDiseno').value) || 0;
-            const costoPasaje = parseFloat(document.getElementById('costoPasaje').value) || 0;
+            const precioM2 = parseFloat(document.getElementById('precioM2').value.replace(',', '.')) || 0;
+            const costoDiseno = parseFloat(document.getElementById('costoDiseno').value.replace(',', '.')) || 0;
+            const costoPasaje = parseFloat(document.getElementById('costoPasaje').value.replace(',', '.')) || 0;
             const costoMaterial = totalM2 * precioM2;
             const total = costoMaterial + costoDiseno + costoPasaje;
             document.getElementById('totalCosto').textContent = `$${total.toFixed(2)}`;
