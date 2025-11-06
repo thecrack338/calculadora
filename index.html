@@ -15,7 +15,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="text-center">Calculadora de Costos de Impresión</h1>
-        <p class="text-center">Agrega medidas en cm (ej: 1x2, 1.00x2.00 o 1,00x2,00), calcula m² totales y costos.</p>
+        <p class="text-center">Agrega medidas en metros (ej: 1x2, 1.00x2.00 o 1,00x2,00), calcula m² totales y costos.</p>
 
         <!-- Formulario para agregar medidas -->
         <div class="card mb-4">
@@ -23,12 +23,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="ancho" class="form-label">Ancho (cm)</label>
-                        <input type="number" class="form-control" id="ancho" step="0.01" placeholder="Ej: 1, 1.00 o 1,00">
+                        <label for="ancho" class="form-label">Ancho (m)</label>
+                        <input type="number" class="form-control" id="ancho" step="0.01" placeholder="Ej: 1.00 o 1,00">
                     </div>
                     <div class="col-md-4">
-                        <label for="alto" class="form-label">Alto (cm)</label>
-                        <input type="number" class="form-control" id="alto" step="0.01" placeholder="Ej: 2, 2.00 o 2,00">
+                        <label for="alto" class="form-label">Alto (m)</label>
+                        <input type="number" class="form-control" id="alto" step="0.01" placeholder="Ej:  2.00 o 2,00">
                     </div>
                     <div class="col-md-4 d-flex align-items-end">
                         <button class="btn btn-primary" onclick="agregarMedida()">Agregar Medida</button>
@@ -92,7 +92,8 @@
                 alert('Ingresa valores válidos para ancho y alto.');
                 return;
             }
-            const m2 = (ancho / 100) * (alto / 100);
+            // Asumiendo metros: ancho x alto = m² (sin dividir por 100)
+            const m2 = ancho * alto;
             medidas.push({ ancho, alto, m2 });
             totalM2 += m2;
             actualizarLista();
@@ -106,7 +107,7 @@
             medidas.forEach((medida, index) => {
                 const li = document.createElement('li');
                 li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                li.innerHTML = `${medida.ancho}cm x ${medida.alto}cm = ${medida.m2.toFixed(2)} m² 
+                li.innerHTML = `${medida.ancho}m x ${medida.alto}m = ${medida.m2.toFixed(2)} m² 
                     <button class="btn btn-danger btn-sm" onclick="eliminarMedida(${index})">Eliminar</button>`;
                 lista.appendChild(li);
             });
@@ -130,3 +131,6 @@
     </script>
 </body>
 </html>
+
+
+
